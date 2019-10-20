@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <button id="test">準備</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      const sound1 = new Audio("./sounds/you_left_call_v2.mp3");
+      const sound2 = new Audio("./sounds/you_joined_call_v2.mp3");
+
+      const test = document.querySelector("#test");
+      test.onclick = () => {
+        sound1.play();
+        sound2.play();
+      };
+      socket.on("chat message", function(msg) {
+        if (msg === "extsu") {
+          sound1.currentTime = 0;
+          sound1.play();
+        } else {
+          setTimeout(function() {
+            sound2.currentTime = 0;
+            sound2.play();
+          }, 1);
+        }
+        console.log(msg);
+      });
+    </script>
+  </body>
+</html>
